@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kiming_kashier/core/view/top/widget/detaile_view.dart';
 import 'package:kiming_kashier/core/view/top/widget/network.dart';
+import 'package:kiming_kashier/theme/util/date.dart';
+import 'package:kiming_kashier/theme/util/time.dart';
 
 @override
 Widget hedderbuild(BuildContext context, VoidCallback isShowButton) {
@@ -19,13 +21,10 @@ Widget hedderbuild(BuildContext context, VoidCallback isShowButton) {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  // ! Detaile Display String
-                  detaileViewbuild(context, ""),
-                  detaileViewbuild(context, ""),
-                ],
+              child: Image.asset(
+                "assets/images/logo.png",
+                width: 100,
+                height: 100,
               ),
             ),
           ),
@@ -55,15 +54,17 @@ Widget hedderbuild(BuildContext context, VoidCallback isShowButton) {
               ),
             ),
           ),
+          // ! Date and Time
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  // ! Detaile Display String
-                  detaileViewbuild(context, "08/21/2025"),
-                  detaileViewbuild(context, "11:08:49"),
+                  // ? Date
+                  Date(),
+                  // ? Time
+                  Time(),
                 ],
               ),
             ),

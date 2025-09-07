@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kiming_kashier/theme/util/db_connection_check.dart';
 
 class NetworkWidget extends StatefulWidget {
   final VoidCallback isShowButton;
@@ -51,6 +52,7 @@ class _NetworkWidgetState extends State<NetworkWidget> {
                   ),
                 ),
               ),
+
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
@@ -67,7 +69,7 @@ class _NetworkWidgetState extends State<NetworkWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text("Network", style: TextStyle(color: Colors.white)),
-                        IconButton(onPressed: () {}, icon: Icon(Icons.wifi)),
+                        db_connection_check(),
                       ],
                     ),
                   ),
