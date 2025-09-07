@@ -213,6 +213,8 @@ class DatabaseConfig {
   static const String suspendGrnCollection = 'Suspend_grn';
   static const String cashiersCollection = 'cashiers';
   static const String brandsCollection = 'brands';
+  static const String itemsCollection = 'products'; 
+  
 
   // Database timeout settings
   static const Duration connectionTimeout = Duration(seconds: 30);
@@ -330,3 +332,5 @@ class DatabaseConfig {
     }
   }
 }
+
+

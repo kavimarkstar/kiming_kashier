@@ -1,4 +1,6 @@
-class LoaclDatabaseConfig {
+import 'package:mongo_dart/mongo_dart.dart';
+
+class LocalDatabaseConfig {
   static String get host => 'localhost';
   static int get port => 27017;
   static String get databaseName => 'kashier';
@@ -27,4 +29,12 @@ class LoaclDatabaseConfig {
   static String get connectionStringNoAuth {
     return 'mongodb://$host:$port/$databaseName';
   }
+
+  // Get the brands collection
+  static Future get brandsDbCollection async {
+    final db = await Db.create(connectionStringNoAuth);
+    await db.open();
+    return db.collection('brands');
+  }
+  
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kiming_kashier/core/home/home.dart';
+import 'package:kiming_kashier/Server/database_sync_service.dart';
+import 'package:kiming_kashier/theme/load/splash_screen.dart';
 import 'package:window_manager/window_manager.dart';
 
 void main() async {
@@ -25,6 +26,16 @@ void main() async {
     await windowManager.focus();
     await windowManager.setFullScreen(true); // Ensure full screen
   });
+
+  // run connection test before UI starts
+  try {
+    final conn = await DatabaseSyncService.testConnections();
+    debugPrint('Database connection test result: $conn');
+    // you can store conn somewhere or handle accordingly
+  } catch (e) {
+    debugPrint('Error during initial DB connection test: $e');
+  }
+
   runApp(const MyApp());
 }
 
@@ -44,7 +55,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: HomePage(),
+      home: const SplashScreen(),
     );
   }
 }

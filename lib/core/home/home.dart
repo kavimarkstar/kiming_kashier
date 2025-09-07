@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:kiming_kashier/Server/loacl_server_data_load.dart';
+
 import 'package:kiming_kashier/core/view/bottom/bottom.dart';
 import 'package:kiming_kashier/core/view/keyboard/keyboard.dart';
 import 'package:kiming_kashier/core/view/middle/middle.dart';
@@ -437,7 +437,7 @@ class _HomeState extends State<HomePage>
             child: Column(
               children: [
                 hedderbuild(context, showBottom),
-                LocalServerDataLoad(),
+
                 middlebuild(context),
                 bottombuild(context, isShow),
               ],
