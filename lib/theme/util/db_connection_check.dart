@@ -109,7 +109,7 @@ class _db_connection_checkState extends State<db_connection_check>
               color: _isChecking
                   ? Colors.orange
                   : _isConnected
-                  ? Colors.green
+                  ? Color(0xff00a877)
                   : Colors.red,
               shadows: [
                 BoxShadow(
@@ -117,7 +117,7 @@ class _db_connection_checkState extends State<db_connection_check>
                       (_isChecking
                               ? Colors.orange
                               : _isConnected
-                              ? Colors.green
+                              ? Color(0xff00a877)
                               : Colors.red)
                           .withOpacity(0.6),
                   blurRadius: 8,

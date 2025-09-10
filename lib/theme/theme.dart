@@ -10,7 +10,7 @@ class AppTheme {
   // ==================== COLOR SCHEME ====================
 
   /// Primary brand color - Windows 11 blue
-  static const Color primaryColor = Color(0xFF0078D4);
+  static const Color primaryColor = Color(0xFF00E297);
 
   /// Primary color with opacity variations
   static const Color primaryLight = Color(0xFF40A9FF);

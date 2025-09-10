@@ -5,8 +5,8 @@ Widget detaileViewbuild(BuildContext context, String title) {
   return Container(
     width: double.infinity,
     decoration: BoxDecoration(
-      color: Colors.white.withOpacity(0.05),
-      border: Border.all(width: 0.1, color: Colors.white),
+      color: Colors.black,
+      border: Border.all(width: 1, color: Colors.white.withOpacity(0.5)),
       borderRadius: BorderRadius.circular(500),
     ),
     child: Padding(

@@ -19,8 +19,8 @@ class _NetworkWidgetState extends State<NetworkWidget> {
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.05),
-            border: Border.all(width: 0.1, color: Colors.white),
+            color: Colors.black,
+            border: Border.all(width: 1, color: Colors.white.withOpacity(0.5)),
             borderRadius: BorderRadius.circular(32),
           ),
           child: Column(
@@ -30,8 +30,11 @@ class _NetworkWidgetState extends State<NetworkWidget> {
                   padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.05),
-                      border: Border.all(width: 0.1, color: Colors.white),
+                      color: Colors.black,
+                      border: Border.all(
+                        width: 1,
+                        color: Colors.white.withOpacity(0.5),
+                      ),
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(28),
                         topRight: Radius.circular(28),
@@ -58,8 +61,11 @@ class _NetworkWidgetState extends State<NetworkWidget> {
                   padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.05),
-                      border: Border.all(width: 0.1, color: Colors.white),
+                      color: Colors.black,
+                      border: Border.all(
+                        width: 1,
+                        color: Colors.white.withOpacity(0.5),
+                      ),
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(28),
                         bottomRight: Radius.circular(28),

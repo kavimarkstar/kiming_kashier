@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:kiming_kashier/core/home/auth/login.dart';
 
 import 'package:kiming_kashier/core/view/bottom/bottom.dart';
 import 'package:kiming_kashier/core/view/keyboard/keyboard.dart';
@@ -12,6 +13,7 @@ import 'package:kiming_kashier/core/view/top/top.dart';
 import 'package:kiming_kashier/database/database_config.dart';
 import 'package:kiming_kashier/main.dart';
 import 'package:kiming_kashier/theme/theme.dart';
+import 'package:kiming_kashier/core/home/auth/cashier_session.dart';
 import 'package:window_manager/window_manager.dart';
 
 class HomePage extends StatefulWidget {
@@ -69,9 +71,20 @@ class _HomeState extends State<HomePage>
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _unitController = TextEditingController();
 
   void _init() async {
     // Set the initial full screen state
+
+    // Load cashier session
+    await CashierSession.loadCashierSession();
+
+    // Check if cashier is logged in, if not show login dialog
+    if (!CashierSession.isLoggedIn) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showChashierLoginDialog();
+      });
+    }
 
     // Try to auto-load database configuration
     try {
@@ -331,6 +344,7 @@ class _HomeState extends State<HomePage>
           _nameController.text = DatabaseConfig.databaseName;
           _usernameController.text = DatabaseConfig.username;
           _passwordController.text = DatabaseConfig.password;
+          _unitController.text = DatabaseConfig.unit;
         });
 
         if (mounted) {
@@ -356,6 +370,7 @@ class _HomeState extends State<HomePage>
         "name": _nameController.text,
         "username": _usernameController.text,
         "password": _passwordController.text,
+        "unit": _unitController.text,
       };
 
       final jsonString = const JsonEncoder.withIndent('  ').convert(config);
@@ -367,6 +382,7 @@ class _HomeState extends State<HomePage>
         databaseName: _nameController.text,
         username: _usernameController.text,
         password: _passwordController.text,
+        unit: _unitController.text,
       );
 
       // If local path is set, save to that path
@@ -427,34 +443,63 @@ class _HomeState extends State<HomePage>
     }
   }
 
+  void _showChashierLoginDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Prevent dismissing by tapping outside
+      builder: (context) => CashierLoginDialog(
+        onLoginSuccess: () {
+          // Force rebuild of the entire home page to update top page
+          setState(() {});
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff151515),
+      backgroundColor: Colors.black,
       body: Row(
         children: [
           Expanded(
             child: Column(
               children: [
-                hedderbuild(context, showBottom),
-
-                middlebuild(context),
-                bottombuild(context, isShow),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TopPage(isShowButton: showBottom),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: middlebuild(context),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: bottombuild(context, isShow),
+                ),
               ],
             ),
           ),
           AnimatedBuilder(
             animation: _slideAnimation,
             builder: (context, child) {
-              return Container(
-                width:
-                    MediaQuery.of(context).size.width *
-                    0.3 *
-                    _slideAnimation.value,
-                height: MediaQuery.of(context).size.height,
-                child: _slideAnimation.value > 0
-                    ? Opacity(opacity: _slideAnimation.value, child: Keyboard())
-                    : SizedBox.shrink(),
+              return Padding(
+                padding: const EdgeInsets.only(top: 8, right: 8, bottom: 8),
+                child: Container(
+                  width:
+                      MediaQuery.of(context).size.width *
+                      0.3 *
+                      _slideAnimation.value,
+                  height: MediaQuery.of(context).size.height,
+                  child: _slideAnimation.value > 0
+                      ? Opacity(
+                          opacity: _slideAnimation.value,
+                          child: Keyboard(),
+                        )
+                      : SizedBox.shrink(),
+                ),
               );
             },
           ),

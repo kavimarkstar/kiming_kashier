@@ -36,5 +36,25 @@ class LocalDatabaseConfig {
     await db.open();
     return db.collection('brands');
   }
-  
+
+  // Get the cashiers collection
+  static Future get cashiersDbCollection async {
+    final db = await Db.create(connectionStringNoAuth);
+    await db.open();
+    return db.collection('cashiers');
+  }
+
+  // Get the products collection
+  static Future get productsDbCollection async {
+    final db = await Db.create(connectionStringNoAuth);
+    await db.open();
+    return db.collection('products');
+  }
+
+  // Get the bills collection
+  static Future get billsDbCollection async {
+    final db = await Db.create(connectionStringNoAuth);
+    await db.open();
+    return db.collection('bills');
+  }
 }

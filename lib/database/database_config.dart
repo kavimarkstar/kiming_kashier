@@ -11,6 +11,7 @@ class DatabaseConfig {
   static String _databaseName = '';
   static String _username = '';
   static String _password = '';
+  static String _unit = '';
 
   // Flag to check if configuration is loaded
   static bool _isConfigLoaded = false;
@@ -26,6 +27,7 @@ class DatabaseConfig {
   static String get password => _password;
   static bool get isConfigLoaded => _isConfigLoaded;
   static String get localConfigPath => _localConfigPath;
+  static String get unit => _unit;
 
   // Save local config path to SharedPreferences
   static Future<void> saveLocalConfigPath(String filePath) async {
@@ -94,6 +96,7 @@ class DatabaseConfig {
         _databaseName = config['name']?.toString() ?? '';
         _username = config['username']?.toString() ?? '';
         _password = config['password']?.toString() ?? '';
+        _unit = config['unit']?.toString() ?? '';
 
         // Validate that required fields are loaded
         if (_host.isEmpty || _port == 0 || _databaseName.isEmpty) {
@@ -146,16 +149,18 @@ class DatabaseConfig {
     required String databaseName,
     required String username,
     required String password,
+    String unit = '',
   }) {
     _host = host;
     _port = port;
     _databaseName = databaseName;
     _username = username;
     _password = password;
+    _unit = unit;
     _isConfigLoaded = true;
 
     print('Database configuration updated:');
-    print('Host: $_host, Port: $_port, Database: $_databaseName');
+    print('Host: $_host, Port: $_port, Database: $_databaseName, Unit: $_unit');
   }
 
   // Save current configuration to JSON file
@@ -167,6 +172,7 @@ class DatabaseConfig {
         'name': _databaseName,
         'username': _username,
         'password': _password,
+        'unit': _unit,
       };
 
       final jsonString = const JsonEncoder.withIndent('  ').convert(config);
@@ -213,8 +219,7 @@ class DatabaseConfig {
   static const String suspendGrnCollection = 'Suspend_grn';
   static const String cashiersCollection = 'cashiers';
   static const String brandsCollection = 'brands';
-  static const String itemsCollection = 'products'; 
-  
+  static const String itemsCollection = 'products';
 
   // Database timeout settings
   static const Duration connectionTimeout = Duration(seconds: 30);
@@ -332,5 +337,3 @@ class DatabaseConfig {
     }
   }
 }
-
-

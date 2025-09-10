@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:kiming_kashier/theme/theme.dart';
+
+class KeyboardBridge {
+  static void Function(String)? onKeyPressed;
+  static VoidCallback? onBackspace;
+  static VoidCallback? onEnter;
+}
 
 class Keyboard extends StatefulWidget {
   final Function(String)? onKeyPressed;
@@ -20,8 +27,8 @@ class _KeyboardState extends State<Keyboard> {
       child: Container(
         padding: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.05),
-          border: Border.all(width: 0.1, color: Colors.white),
+          color: Colors.black,
+          border: Border.all(width: 1, color: Colors.white.withOpacity(0.5)),
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
@@ -39,31 +46,27 @@ class _KeyboardState extends State<Keyboard> {
                 Expanded(
                   child: _buildKey(
                     icon: Icons.keyboard_return,
-                    onTap: widget.onEnter,
+                    onTap: widget.onEnter ?? KeyboardBridge.onEnter,
                   ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: _buildKey(
                     icon: Icons.backspace_outlined,
-                    onTap: widget.onBackspace,
+                    onTap: widget.onBackspace ?? KeyboardBridge.onBackspace,
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 8),
-            _buildKeyRow(['?', '<', '>']),
+            _buildKeyRow(['+', '<', '>']),
             const SizedBox(height: 8),
-            // First row: 1, 2, 3
             _buildKeyRow(['1', '2', '3']),
             const SizedBox(height: 8),
-            // Second row: 4, 5, 6
             _buildKeyRow(['4', '5', '6']),
             const SizedBox(height: 8),
-            // Third row: 7, 8, 9
             _buildKeyRow(['7', '8', '9']),
             const SizedBox(height: 8),
-            // Fourth row: Backspace, 0, 00, 000
             Row(
               children: [
                 Expanded(
@@ -71,33 +74,36 @@ class _KeyboardState extends State<Keyboard> {
                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
                     child: _buildKey(
                       text: '0',
-                      onTap: () => widget.onKeyPressed?.call('0'),
+                      onTap: () =>
+                          (widget.onKeyPressed ?? KeyboardBridge.onKeyPressed)
+                              ?.call('0'),
                     ),
                   ),
                 ),
-
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
                     child: _buildKey(
                       text: '00',
-                      onTap: () => widget.onKeyPressed?.call('00'),
+                      onTap: () =>
+                          (widget.onKeyPressed ?? KeyboardBridge.onKeyPressed)
+                              ?.call('00'),
                     ),
                   ),
                 ),
-
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
                     child: _buildKey(
                       text: '000',
-                      onTap: () => widget.onKeyPressed?.call('000'),
+                      onTap: () =>
+                          (widget.onKeyPressed ?? KeyboardBridge.onKeyPressed)
+                              ?.call('000'),
                     ),
                   ),
                 ),
               ],
             ),
-
             const SizedBox(height: 8),
             Divider(),
             const SizedBox(height: 8),
@@ -167,7 +173,8 @@ class _KeyboardState extends State<Keyboard> {
             padding: const EdgeInsets.symmetric(horizontal: 4.0),
             child: _buildKey(
               text: number,
-              onTap: () => widget.onKeyPressed?.call(number),
+              onTap: () => (widget.onKeyPressed ?? KeyboardBridge.onKeyPressed)
+                  ?.call(number),
             ),
           ),
         );
@@ -185,14 +192,11 @@ class _KeyboardState extends State<Keyboard> {
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
+          backgroundColor: Color(0xff151515),
           foregroundColor: Colors.black87,
           elevation: 2,
           shadowColor: Colors.black.withOpacity(0.1),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-            side: BorderSide(color: Colors.grey[300]!),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           padding: EdgeInsets.zero,
         ),
         child: text != null
@@ -201,10 +205,10 @@ class _KeyboardState extends State<Keyboard> {
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                  color: AppTheme.primaryColor,
                 ),
               )
-            : Icon(icon, size: 20, color: Colors.black87),
+            : Icon(icon, size: 20, color: AppTheme.primaryColor),
       ),
     );
   }
